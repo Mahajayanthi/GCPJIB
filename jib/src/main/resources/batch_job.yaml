@@ -1,0 +1,11 @@
+apiVersion: batch/v1beta1
+kind: Job
+metadata:
+  name: my-batch-job
+spec:
+  template:
+    spec:
+      containers:
+        - name: my-batch-container
+          image: gcr.io/cloud-run-demo-389607/gradle:latest
+          command: ["java", "-jar", "/app/my-spring-boot-application.jar"]

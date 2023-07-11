@@ -1,0 +1,38 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.7.12'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id  'com.google.cloud.tools.jib' version '3.1.0'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+jib {
+	to {
+		image = 'gcr.io/cloud-run-demo-389607/session'
+		tags = ['new']
+		auth {
+			username = '_json_key'
+			password = file('src/main/resources/cloud-run-demo-389607-6cb1fec2bf24.json').text
+//			password = file('D:/gcp/javaproject-388510-a1f5936f73b9.json').text
+		}
+	}
+	container {
+		jvmFlags = ['-Xms512m', '-Xdebug']
+	}
+}
+
+dependencies {
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
